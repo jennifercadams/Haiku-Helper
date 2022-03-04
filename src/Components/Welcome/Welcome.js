@@ -10,9 +10,9 @@ export default class Welcome extends React.Component {
   render() {
     return (
       <div id="welcome">
-        <p class="line-1">I'm Haiku Helper</p>
-        <p class="line-2"><span id="change-text"></span></p>
-        <p class="line-3">For writing haiku</p>
+        <p className="line-1">I'm Haiku Helper</p>
+        <p className="line-2"><span id="change-text"></span></p>
+        <p className="line-3">For writing haiku</p>
         <button id="start" onClick={this.props.start}>Start</button>
       </div>
     )

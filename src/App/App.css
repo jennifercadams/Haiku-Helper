@@ -12,9 +12,5 @@ body {
 }
 
 main {
-  display: grid;
-  grid-template-areas: 
-    "header"
-    "main";
   height: 100vh;
 }

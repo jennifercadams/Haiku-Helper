@@ -1,0 +1,24 @@
+#haiku-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+}
+
+input {
+  margin: 10px 10px 20px;
+}
+
+input[type="text"] {
+  height: 24px;
+  width: 340px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+input[type="submit"], #count-syllables {
+  font-size: inherit;
+  font-family: inherit;
+  padding: 5px 10px;
+  border-radius: 10px;
+}

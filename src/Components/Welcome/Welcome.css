@@ -1,5 +1,5 @@
 #welcome {
-  grid-row: header / main;
+  height: 100vh;
   font-size: 26px;
   text-align: center;
   display: flex;
