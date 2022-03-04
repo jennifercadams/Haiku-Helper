@@ -5,6 +5,7 @@ import './App.css';
 import Welcome from '../Components/Welcome/Welcome';
 import Header from '../Components/Header/Header';
 import HaikuForm from '../Components/HaikuForm/HaikuForm';
+import HaikuEditor from '../Components/HaikuEditor/HaikuEditor';
 
 const fetchSyllables = 'https://api.datamuse.com/words?md=s&max=1&sp=';
 
@@ -45,20 +46,24 @@ export default class App extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    const areSyllablesCounted = this.state.haiku.line1.syllables
-      && this.state.haiku.line2.syllables
-      && this.state.haiku.line3.syllables;
-    if (!areSyllablesCounted) {
-      await this.getSyllableCount(e);
+    if (this.state.line1 && this.state.line2 && this.state.line3) {
+      const areSyllablesCounted = this.state.haiku.line1.syllables
+        && this.state.haiku.line2.syllables
+        && this.state.haiku.line3.syllables;
+      if (!areSyllablesCounted) {
+        await this.getSyllableCount(e);
+      }
+      this.setState(state => ({
+        editor: true,
+        history: [this.state.haiku, ...state.history],
+        line1: '',
+        line2: '',
+        line3: '',
+        haiku: { line1: {}, line2: {}, line3: {} }
+      }))
+    } else {
+      this.setState({ formError: 'Please enter text in each line. '});
     }
-    this.setState(state => ({
-      editor: true,
-      history: [this.state.haiku, ...state.history],
-      line1: '',
-      line2: '',
-      line3: '',
-      haiku: { line1: {}, line2: {}, line3: {} }
-    }))
   }
 
   async countSyllables(line) {
@@ -91,7 +96,7 @@ export default class App extends React.Component {
         }
       }));
     } else {
-      this.setState({ formError: 'Please enter text in each line. '})
+      this.setState({ formError: 'Please enter text in each line. '});
     }
   }
 
@@ -109,6 +114,9 @@ export default class App extends React.Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} 
           getSyllableCount={this.getSyllableCount}
+        />}
+        {!this.state.welcome && this.state.editor && <HaikuEditor 
+          history={this.state.history}
         />}
       </main>
     )

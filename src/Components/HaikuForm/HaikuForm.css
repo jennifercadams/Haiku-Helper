@@ -19,6 +19,7 @@ input[type="text"] {
 #error {
   margin: 0;
   font-size: 16px;
+  color: red;
 }
 
 input[type="submit"], #count-syllables {
