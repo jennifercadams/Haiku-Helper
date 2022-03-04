@@ -1,0 +1,7 @@
+.word {
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-family: inherit;
+}
