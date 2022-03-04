@@ -35,7 +35,7 @@ export default class App extends React.Component {
       [e.target.id]: e.target.value,
       haiku: {
         ...state.haiku, 
-        [e.target.id]: { text: e.target.value.trim().split(' '), syllables: null }
+        [e.target.id]: { text: e.target.value.trim().replace(/\s\s+/g, ' ').split(' '), syllables: null }
       }
     }));
   }
