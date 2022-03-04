@@ -34,14 +34,17 @@ export default class App extends React.Component {
   }
 
   handleChange(e) {
-      this.setState(state => ({
-        formError: '',
-        [e.target.id]: e.target.value,
-        haiku: {
-          ...state.haiku, 
-          [e.target.id]: { text: e.target.value.trim().replace(/\s\s+/g, ' ').split(' '), syllables: null }
+    this.setState(state => ({
+      formError: '',
+      [e.target.id]: e.target.value,
+      haiku: {
+        ...state.haiku, 
+        [e.target.id]: { 
+          text: e.target.value.trim().replace(/[^\sa-z'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ').split(' '), 
+          syllables: null
         }
-      }));
+      }
+    }));
   }
 
   async handleSubmit(e) {
