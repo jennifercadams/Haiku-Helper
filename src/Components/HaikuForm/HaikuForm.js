@@ -3,10 +3,6 @@ import React from 'react';
 import './HaikuForm.css';
 
 export default class HaikuForm extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <form id="haiku-form" onSubmit={this.props.handleSubmit}>
@@ -49,9 +45,10 @@ export default class HaikuForm extends React.Component {
             {this.props.haiku.line3.syllables || null}
           </span>
         </label>
+        <p id="error">{this.props.formError}</p>
         <div>
           <button id="count-syllables" onClick={this.props.getSyllableCount}>Count Syllables</button>
-          <input type="submit" />
+          <input type="submit" value="Go to Editor" />
         </div>
       </form>
     )

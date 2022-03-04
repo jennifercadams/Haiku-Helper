@@ -13,6 +13,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       welcome: true,
+      editor: false,
+      formError: '',
       line1: '',
       line2: '',
       line3: '',
@@ -31,18 +33,26 @@ export default class App extends React.Component {
   }
 
   handleChange(e) {
-    this.setState(state => ({
-      [e.target.id]: e.target.value,
-      haiku: {
-        ...state.haiku, 
-        [e.target.id]: { text: e.target.value.trim().replace(/\s\s+/g, ' ').split(' '), syllables: null }
-      }
-    }));
+      this.setState(state => ({
+        formError: '',
+        [e.target.id]: e.target.value,
+        haiku: {
+          ...state.haiku, 
+          [e.target.id]: { text: e.target.value.trim().replace(/\s\s+/g, ' ').split(' '), syllables: null }
+        }
+      }));
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
+    const areSyllablesCounted = this.state.haiku.line1.syllables
+      && this.state.haiku.line2.syllables
+      && this.state.haiku.line3.syllables;
+    if (!areSyllablesCounted) {
+      await this.getSyllableCount(e);
+    }
     this.setState(state => ({
+      editor: true,
       history: [this.state.haiku, ...state.history],
       line1: '',
       line2: '',
@@ -69,16 +79,20 @@ export default class App extends React.Component {
 
   async getSyllableCount(e) {
     e.preventDefault();
-    const line1Count = await this.countSyllables('line1');
-    const line2Count = await this.countSyllables('line2');
-    const line3Count = await this.countSyllables('line3');
-    this.setState(state => ({
-      haiku: { 
-        line1: { ...state.haiku.line1, syllables: line1Count },
-        line2: { ...state.haiku.line2, syllables: line2Count },
-        line3: { ...state.haiku.line3, syllables: line3Count }
-      }
-    }));
+    if (this.state.line1 && this.state.line2 && this.state.line3) {
+      const line1Count = await this.countSyllables('line1');
+      const line2Count = await this.countSyllables('line2');
+      const line3Count = await this.countSyllables('line3');
+      this.setState(state => ({
+        haiku: { 
+          line1: { ...state.haiku.line1, syllables: line1Count },
+          line2: { ...state.haiku.line2, syllables: line2Count },
+          line3: { ...state.haiku.line3, syllables: line3Count }
+        }
+      }));
+    } else {
+      this.setState({ formError: 'Please enter text in each line. '})
+    }
   }
 
   render() {
@@ -91,6 +105,7 @@ export default class App extends React.Component {
           line2={this.state.line2}
           line3={this.state.line3}
           haiku={this.state.haiku}
+          formError={this.state.formError}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} 
           getSyllableCount={this.getSyllableCount}

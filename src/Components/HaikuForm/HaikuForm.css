@@ -6,14 +6,19 @@
 }
 
 input {
-  margin: 10px 10px 20px;
+  margin: 15px 10px;
 }
 
 input[type="text"] {
   height: 24px;
-  width: 340px;
+  width: 280px;
   font-size: 16px;
   font-family: inherit;
+}
+
+#error {
+  margin: 0;
+  font-size: 16px;
 }
 
 input[type="submit"], #count-syllables {
