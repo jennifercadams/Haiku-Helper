@@ -6,6 +6,8 @@ import Welcome from '../Components/Welcome/Welcome';
 import Header from '../Components/Header/Header';
 import HaikuForm from '../Components/HaikuForm/HaikuForm';
 
+const fetchSyllables = 'https://api.datamuse.com/words?md=s&max=1&sp=';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,16 +16,13 @@ export default class App extends React.Component {
       line1: '',
       line2: '',
       line3: '',
-      haiku: {
-        line1: {},
-        line2: {},
-        line3: {}
-      },
+      haiku: { line1: {}, line2: {}, line3: {} },
       history: []
     }
     this.start = this.start.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.countSyllables = this.countSyllables.bind(this);
     this.getSyllableCount = this.getSyllableCount.bind(this);
   }
 
@@ -36,7 +35,7 @@ export default class App extends React.Component {
       [e.target.id]: e.target.value,
       haiku: {
         ...state.haiku, 
-        [e.target.id]: { text: e.target.value.split(' '), syllables: null }
+        [e.target.id]: { text: e.target.value.trim().split(' '), syllables: null }
       }
     }));
   }
@@ -48,12 +47,38 @@ export default class App extends React.Component {
       line1: '',
       line2: '',
       line3: '',
-      haiku: {}
+      haiku: { line1: {}, line2: {}, line3: {} }
     }))
   }
 
-  getSyllableCount(e) {
+  async countSyllables(line) {
+    const getWordSyllables = async (word) => {
+      const count = await fetch(fetchSyllables + word)
+        .then(response => response.json())
+        .then(jsonResponse => jsonResponse[0].numSyllables)
+      return count;
+    }
+    let counter = 0;
+    for (const word of this.state.haiku[line].text) {
+      const cleanWord = word.replace(/[^a-z]/gi, '');
+      const syllables = await getWordSyllables(cleanWord);
+      counter += syllables;
+    }
+    return counter;
+  }
+
+  async getSyllableCount(e) {
     e.preventDefault();
+    const line1Count = await this.countSyllables('line1');
+    const line2Count = await this.countSyllables('line2');
+    const line3Count = await this.countSyllables('line3');
+    this.setState(state => ({
+      haiku: { 
+        line1: { ...state.haiku.line1, syllables: line1Count },
+        line2: { ...state.haiku.line2, syllables: line2Count },
+        line3: { ...state.haiku.line3, syllables: line3Count }
+      }
+    }));
   }
 
   render() {
