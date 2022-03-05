@@ -131,7 +131,7 @@ export default class App extends React.Component {
           ]
         }
       }
-    }))
+    }), () => this.updateSyllableCount(line));
   }
 
   render() {
