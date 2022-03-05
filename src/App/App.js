@@ -27,6 +27,7 @@ export default class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.countSyllables = this.countSyllables.bind(this);
     this.getSyllableCount = this.getSyllableCount.bind(this);
+    this.updateSyllableCount = this.updateSyllableCount.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
   }
 
@@ -106,6 +107,16 @@ export default class App extends React.Component {
     } else {
       this.setState({ formError: 'Please enter text in each line. '});
     }
+  }
+
+  async updateSyllableCount(line) {
+    const newCount = await this.countSyllables(line);
+    this.setState(state => ({
+      haiku: {
+        ...state.haiku,
+        [line]: { ...state.haiku[line], syllables: newCount }
+      }
+    }))
   }
 
   deleteWord(line, i) {

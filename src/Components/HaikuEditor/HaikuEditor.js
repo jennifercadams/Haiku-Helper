@@ -34,15 +34,18 @@ export default class HaikuEditor extends React.Component {
   }
 
   render() {
+    const methods = {
+      closeWordMenus: this.closeWordMenus,
+      toggleWordMenu: this.toggleWordMenu,
+      deleteWord: this.props.deleteWord
+    }
     const line1 = this.props.haiku.line1.text.map((word, i) => <Word 
       line="line1"
       word={word}
       key={`line-1-word-${i}`}
       index={i}
       menus={this.state.line1Menus}
-      closeWordMenus={this.closeWordMenus}
-      toggleWordMenu={this.toggleWordMenu}
-      deleteWord={this.props.deleteWord}
+      {...methods}
     />);
     const line2 = this.props.haiku.line2.text.map((word, i) => <Word 
       line="line2"
@@ -50,9 +53,7 @@ export default class HaikuEditor extends React.Component {
       key={`line-2-word-${i}`}
       index={i}
       menus={this.state.line2Menus}
-      closeWordMenus={this.closeWordMenus}
-      toggleWordMenu={this.toggleWordMenu}
-      deleteWord={this.props.deleteWord}
+      {...methods}
     />);
     const line3 = this.props.haiku.line3.text.map((word, i) => <Word 
       line="line3"
@@ -60,9 +61,7 @@ export default class HaikuEditor extends React.Component {
       key={`line-3-word-${i}`}
       index={i}
       menus={this.state.line3Menus}
-      closeWordMenus={this.closeWordMenus}
-      toggleWordMenu={this.toggleWordMenu}
-      deleteWord={this.props.deleteWord}
+      {...methods}
     />);
     return (
       <div id="haiku-editor">
