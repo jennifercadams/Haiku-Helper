@@ -27,6 +27,7 @@ export default class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.countSyllables = this.countSyllables.bind(this);
     this.getSyllableCount = this.getSyllableCount.bind(this);
+    this.deleteWord = this.deleteWord.bind(this);
   }
 
   start() {
@@ -107,6 +108,21 @@ export default class App extends React.Component {
     }
   }
 
+  deleteWord(line, i) {
+    this.setState(state => ({
+      haiku: {
+        ...state.haiku,
+        [line]: {
+          ...state.haiku[line],
+          text: [
+            ...state.haiku[line].text.slice(0, i),
+            ...state.haiku[line].text.slice(i + 1)
+          ]
+        }
+      }
+    }))
+  }
+
   render() {
     return (
       <main>
@@ -120,6 +136,7 @@ export default class App extends React.Component {
         />}
         {!this.state.welcome && this.state.editor && <HaikuEditor 
           haiku={this.state.haiku}
+          deleteWord={this.deleteWord}
         />}
       </main>
     )

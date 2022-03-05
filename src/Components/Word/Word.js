@@ -17,7 +17,11 @@ export default class Word extends React.Component {
         </button>
         <WordMenu 
           key={`${line}-${index}-menu`}
+          line={line}
+          index={index}
           menuIndex={menus[index]}
+          closeWordMenus={this.props.closeWordMenus}
+          deleteWord={this.props.deleteWord}
         />
       </div>
     )

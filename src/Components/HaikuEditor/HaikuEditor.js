@@ -11,16 +11,21 @@ export default class HaikuEditor extends React.Component {
       line2Menus: this.props.haiku.line2.text.map(_ => false),
       line3Menus: this.props.haiku.line3.text.map(_ => false)
     }
+    this.closeWordMenus = this.closeWordMenus.bind(this);
     this.toggleWordMenu = this.toggleWordMenu.bind(this);
   }
 
-  toggleWordMenu(line, i) {
-    const isOpen = this.state[line + 'Menus'][i];
+  closeWordMenus() {
     this.setState({
       line1Menus: this.props.haiku.line1.text.map(_ => false),
       line2Menus: this.props.haiku.line2.text.map(_ => false),
       line3Menus: this.props.haiku.line3.text.map(_ => false)
     });
+  }
+
+  toggleWordMenu(line, i) {
+    const isOpen = this.state[line + 'Menus'][i];
+    this.closeWordMenus();
     if (!isOpen) {
       this.setState(state => {
         state[line + 'Menus'][i] = true;
@@ -35,7 +40,9 @@ export default class HaikuEditor extends React.Component {
       key={`line-1-word-${i}`}
       index={i}
       menus={this.state.line1Menus}
+      closeWordMenus={this.closeWordMenus}
       toggleWordMenu={this.toggleWordMenu}
+      deleteWord={this.props.deleteWord}
     />);
     const line2 = this.props.haiku.line2.text.map((word, i) => <Word 
       line="line2"
@@ -43,7 +50,9 @@ export default class HaikuEditor extends React.Component {
       key={`line-2-word-${i}`}
       index={i}
       menus={this.state.line2Menus}
+      closeWordMenus={this.closeWordMenus}
       toggleWordMenu={this.toggleWordMenu}
+      deleteWord={this.props.deleteWord}
     />);
     const line3 = this.props.haiku.line3.text.map((word, i) => <Word 
       line="line3"
@@ -51,7 +60,9 @@ export default class HaikuEditor extends React.Component {
       key={`line-3-word-${i}`}
       index={i}
       menus={this.state.line3Menus}
+      closeWordMenus={this.closeWordMenus}
       toggleWordMenu={this.toggleWordMenu}
+      deleteWord={this.props.deleteWord}
     />);
     return (
       <div id="haiku-editor">
