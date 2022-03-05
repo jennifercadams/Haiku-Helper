@@ -25,7 +25,6 @@ export default class WordMenu extends React.Component {
     } else {
       this.setState(state => ({ addBefore: false, addAfter: !state.addAfter, wordInput: '' }));
     }
-    
   }
 
   handleAdd(line, i, word) {
@@ -34,10 +33,10 @@ export default class WordMenu extends React.Component {
   }
 
   render() {
-    const { menuIndex, line, index, deleteWord, closeWordMenus, blankWord } = this.props;
+    const { line, index, deleteWord, closeWordMenus, blankWord } = this.props;
     return (
       <>
-      {menuIndex && !blankWord && <div className="word-menu">
+      {!blankWord && <div className="word-menu">
         <button className="word-menu-item" onClick={() => {
           deleteWord(line, index);
           closeWordMenus();
@@ -76,7 +75,7 @@ export default class WordMenu extends React.Component {
           }}>Add</button>}
         </div>
       </div>}
-      {menuIndex && blankWord && <div className="word-menu">
+      {blankWord && <div className="word-menu">
         <div className="add-word-container">
           <button 
             className="word-menu-item blank-word" 
