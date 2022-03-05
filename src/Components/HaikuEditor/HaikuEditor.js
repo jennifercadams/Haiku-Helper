@@ -78,9 +78,24 @@ export default class HaikuEditor extends React.Component {
     return (
       <div id="haiku-editor">
         <h2>Edit Haiku</h2>
-        <div id="editor-line-1">{line1.length > 0 ? line1 : blankWord('line1')}</div>
-        <div id="editor-line-2">{line2.length > 0 ? line2 : blankWord('line2')}</div>
-        <div id="editor-line-3">{line3.length > 0 ? line3 : blankWord('line3')}</div>
+        <div id="editor-line-1">
+          {line1.length > 0 ? line1 : blankWord('line1')}
+          <span style={this.props.haiku.line1.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {this.props.haiku.line1.syllables}
+          </span>
+        </div>
+        <div id="editor-line-2">
+          {line2.length > 0 ? line2 : blankWord('line2')}
+          <span style={this.props.haiku.line2.syllables === 7 ? {color: 'green'} : { color: 'red' }}>
+            {this.props.haiku.line2.syllables}
+          </span>
+        </div>
+        <div id="editor-line-3">
+          {line3.length > 0 ? line3 : blankWord('line3')}
+          <span style={this.props.haiku.line3.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {this.props.haiku.line3.syllables}
+          </span>
+        </div>
       </div>
     )
   }
