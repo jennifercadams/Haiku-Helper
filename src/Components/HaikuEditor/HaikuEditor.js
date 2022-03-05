@@ -37,7 +37,8 @@ export default class HaikuEditor extends React.Component {
     const methods = {
       closeWordMenus: this.closeWordMenus,
       toggleWordMenu: this.toggleWordMenu,
-      deleteWord: this.props.deleteWord
+      deleteWord: this.props.deleteWord,
+      addWord: this.props.addWord
     }
     const line1 = this.props.haiku.line1.text.map((word, i) => <Word 
       blankWord={false}

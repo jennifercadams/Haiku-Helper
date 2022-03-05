@@ -23,6 +23,7 @@ export default class Word extends React.Component {
           blankWord={blankWord}
           closeWordMenus={this.props.closeWordMenus}
           deleteWord={this.props.deleteWord}
+          addWord={this.props.addWord}
         />
       </div>
     )

@@ -29,6 +29,7 @@ export default class App extends React.Component {
     this.getSyllableCount = this.getSyllableCount.bind(this);
     this.updateSyllableCount = this.updateSyllableCount.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
+    this.addWord = this.addWord.bind(this);
   }
 
   start() {
@@ -142,7 +143,7 @@ export default class App extends React.Component {
           ...state.haiku[line],
           text: [
             ...state.haiku[line].text.slice(0, i),
-            word,
+            word.trim().replace(/[^a-z'-\.\,\?;:]/gi, ''),
             ...state.haiku[line].text.slice(i)
           ]
         }
@@ -164,6 +165,7 @@ export default class App extends React.Component {
         {!this.state.welcome && this.state.editor && <HaikuEditor 
           haiku={this.state.haiku}
           deleteWord={this.deleteWord}
+          addWord={this.addWord}
         />}
       </main>
     )
