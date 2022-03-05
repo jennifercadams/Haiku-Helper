@@ -23,15 +23,9 @@ export default class HaikuEditor extends React.Component {
     return (
       <div id="haiku-editor">
         <h2>Edit Haiku</h2>
-        <div id="editor-line-1">
-          {line1}
-        </div>
-        <div id="editor-line-2">
-          {line2}
-        </div>
-        <div id="editor-line-3">
-          {line3}
-        </div>
+        <div id="editor-line-1">{line1}</div>
+        <div id="editor-line-2">{line2}</div>
+        <div id="editor-line-3">{line3}</div>
       </div>
     )
   }
