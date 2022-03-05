@@ -1,4 +1,8 @@
-.word {
+.word-container {
+  display: inline-block;
+}
+
+.word-button {
   padding: 5px 10px;
   margin: 5px;
   border-radius: 10px;

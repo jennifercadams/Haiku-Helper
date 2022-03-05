@@ -1,0 +1,10 @@
+.word-menu {
+  position: absolute;
+}
+
+.word-menu-item {
+  display: block;
+  padding: 5px;
+  font-family: inherit;
+  font-size: inherit;
+}
