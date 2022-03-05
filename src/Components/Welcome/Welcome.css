@@ -8,11 +8,11 @@
   align-items: center;
 }
 
-.line-1 {
+#welcome-line-1 {
   animation: fadein 1500ms backwards ease-in;
 }
 
-.line-2 {
+#welcome-line-2 {
   animation: fadein 1500ms 1s backwards ease-in;
 }
 
@@ -21,7 +21,7 @@
   animation: cycletext 8s 3s both, fadeinout 2s 3s 4;
 }
 
-.line-3 {
+#welcome-line-3 {
   animation: fadein 1500ms 2s backwards ease-in;
 }
 
