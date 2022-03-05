@@ -16,9 +16,9 @@ export default class App extends React.Component {
       welcome: true,
       editor: false,
       formError: '',
-      line1: '',
-      line2: '',
-      line3: '',
+      line1: '', line1Syllables: null,
+      line2: '', line2Syllables: null,
+      line3: '', line3Syllables: null,
       haiku: { line1: {}, line2: {}, line3: {} },
       history: []
     }
@@ -36,7 +36,9 @@ export default class App extends React.Component {
   handleChange(e) {
     this.setState(state => ({
       formError: '',
+      editor: false,
       [e.target.id]: e.target.value,
+      [e.target.id + 'Syllables']: null,
       haiku: {
         ...state.haiku, 
         [e.target.id]: { 
@@ -59,10 +61,9 @@ export default class App extends React.Component {
       this.setState(state => ({
         editor: true,
         history: [this.state.haiku, ...state.history],
-        line1: '',
-        line2: '',
-        line3: '',
-        haiku: { line1: {}, line2: {}, line3: {} }
+        line1: '', line1Syllables: null,
+        line2: '', line2Syllables: null,
+        line3: '', line3Syllables: null
       }))
     } else {
       this.setState({ formError: 'Please enter text in each line. '});
@@ -92,6 +93,9 @@ export default class App extends React.Component {
       const line2Count = await this.countSyllables('line2');
       const line3Count = await this.countSyllables('line3');
       this.setState(state => ({
+        line1Syllables: line1Count,
+        line2Syllables: line2Count,
+        line3Syllables: line3Count,
         haiku: { 
           line1: { ...state.haiku.line1, syllables: line1Count },
           line2: { ...state.haiku.line2, syllables: line2Count },
@@ -109,17 +113,13 @@ export default class App extends React.Component {
         {this.state.welcome && <Welcome start={this.start} />}
         {!this.state.welcome && <Header />}
         {!this.state.welcome && <HaikuForm 
-          line1={this.state.line1}
-          line2={this.state.line2}
-          line3={this.state.line3}
-          haiku={this.state.haiku}
-          formError={this.state.formError}
+          {...this.state}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} 
           getSyllableCount={this.getSyllableCount}
         />}
         {!this.state.welcome && this.state.editor && <HaikuEditor 
-          history={this.state.history}
+          haiku={this.state.haiku}
         />}
       </main>
     )

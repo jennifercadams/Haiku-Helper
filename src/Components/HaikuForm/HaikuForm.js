@@ -15,8 +15,8 @@ export default class HaikuForm extends React.Component {
             onChange={this.props.handleChange}
             value={this.props.line1} 
           />
-          <span id="line-1-msg" style={this.props.haiku.line1.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.haiku.line1.syllables || null}
+          <span id="line-1-msg" style={this.props.line1Syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {this.props.line1Syllables || null}
           </span>
         </label>
         <label htmlFor="line-2">Line 2
@@ -28,8 +28,8 @@ export default class HaikuForm extends React.Component {
             onChange={this.props.handleChange}
             value={this.props.line2} 
           />
-          <span id="line-2-msg" style={this.props.haiku.line2.syllables === 7 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.haiku.line2.syllables || null}
+          <span id="line-2-msg" style={this.props.line2Syllables === 7 ? {color: 'green'} : { color: 'red' }}>
+            {this.props.line2Syllables || null}
           </span>
         </label>
         <label htmlFor="line-3">Line 3
@@ -41,8 +41,8 @@ export default class HaikuForm extends React.Component {
             onChange={this.props.handleChange}
             value={this.props.line3} 
           />
-          <span id="line-3-msg" style={this.props.haiku.line3.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.haiku.line3.syllables || null}
+          <span id="line-3-msg" style={this.props.line3Syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {this.props.line3Syllables || null}
           </span>
         </label>
         <p id="error">{this.props.formError}</p>
