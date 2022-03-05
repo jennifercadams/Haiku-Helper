@@ -134,6 +134,22 @@ export default class App extends React.Component {
     }), () => this.updateSyllableCount(line));
   }
 
+  addWord(line, i, word) {
+    this.setState(state => ({
+      haiku: {
+        ...state.haiku,
+        [line]: {
+          ...state.haiku[line],
+          text: [
+            ...state.haiku[line].text.slice(0, i),
+            word,
+            ...state.haiku[line].text.slice(i)
+          ]
+        }
+      }
+    }), () => this.updateSyllableCount(line));
+  }
+
   render() {
     return (
       <main>

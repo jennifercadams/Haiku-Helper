@@ -6,7 +6,7 @@ export default class HaikuForm extends React.Component {
   render() {
     return (
       <form id="haiku-form" onSubmit={this.props.handleSubmit}>
-        <label htmlFor="line-1">Line 1
+        <label htmlFor="line1">Line 1
           <input type="text"
             name="line1"
             id="line1"
@@ -19,7 +19,7 @@ export default class HaikuForm extends React.Component {
             {this.props.line1Syllables || null}
           </span>
         </label>
-        <label htmlFor="line-2">Line 2
+        <label htmlFor="line2">Line 2
           <input type="text"
             name="line2"
             id="line2"
@@ -32,7 +32,7 @@ export default class HaikuForm extends React.Component {
             {this.props.line2Syllables || null}
           </span>
         </label>
-        <label htmlFor="line-3">Line 3
+        <label htmlFor="line3">Line 3
           <input type="text" 
             name="line3"
             id="line3"

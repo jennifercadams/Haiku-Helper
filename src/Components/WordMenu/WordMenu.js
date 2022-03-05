@@ -14,9 +14,15 @@ export default class WordMenu extends React.Component {
         }}>
           Delete Word
         </button>
-        <button className="word-menu-item">Find Synonym</button>
-        <button className="word-menu-item">Add Word Before</button>
-        <button className="word-menu-item">Add Word After</button>
+        <div className="add-word-container">
+          <button className="word-menu-item">Find Synonym</button>
+        </div>
+        <div className="add-word-container">
+          <button className="word-menu-item">Add Word Before</button>
+        </div>
+        <div className="add-word-container">
+          <button className="word-menu-item">Add Word After</button>
+        </div>
       </div>}
       {menuIndex && blankWord && <div className="word-menu">
         <button className="word-menu-item blank-word">Add Word</button>
