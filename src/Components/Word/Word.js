@@ -5,7 +5,7 @@ import WordMenu from '../WordMenu/WordMenu';
 
 export default class Word extends React.Component {
   render() {
-    const { line, index, menus } = this.props;
+    const { line, index, menus, word, blankWord } = this.props;
     return (
       <div className="word-container">
         <button 
@@ -13,13 +13,14 @@ export default class Word extends React.Component {
           key={`${line}-${index}-button`}
           onClick={() => this.props.toggleWordMenu(line, index)}
         >
-          {this.props.word}
+          {word}
         </button>
         <WordMenu 
           key={`${line}-${index}-menu`}
           line={line}
           index={index}
           menuIndex={menus[index]}
+          blankWord={blankWord}
           closeWordMenus={this.props.closeWordMenus}
           deleteWord={this.props.deleteWord}
         />

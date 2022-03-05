@@ -40,6 +40,7 @@ export default class HaikuEditor extends React.Component {
       deleteWord: this.props.deleteWord
     }
     const line1 = this.props.haiku.line1.text.map((word, i) => <Word 
+      blankWord={false}
       line="line1"
       word={word}
       key={`line-1-word-${i}`}
@@ -48,6 +49,7 @@ export default class HaikuEditor extends React.Component {
       {...methods}
     />);
     const line2 = this.props.haiku.line2.text.map((word, i) => <Word 
+      blankWord={false}
       line="line2"
       word={word}
       key={`line-2-word-${i}`}
@@ -56,6 +58,7 @@ export default class HaikuEditor extends React.Component {
       {...methods}
     />);
     const line3 = this.props.haiku.line3.text.map((word, i) => <Word 
+      blankWord={false}
       line="line3"
       word={word}
       key={`line-3-word-${i}`}
@@ -63,12 +66,21 @@ export default class HaikuEditor extends React.Component {
       menus={this.state.line3Menus}
       {...methods}
     />);
+    const blankWord = (line) => <Word 
+      blankWord={true}
+      line={line}
+      word=""
+      key={`${line}-blank`}
+      index={0}
+      menus={this.state[line + 'Menus']}
+      {...methods}
+    />;
     return (
       <div id="haiku-editor">
         <h2>Edit Haiku</h2>
-        <div id="editor-line-1">{line1}</div>
-        <div id="editor-line-2">{line2}</div>
-        <div id="editor-line-3">{line3}</div>
+        <div id="editor-line-1">{line1.length > 0 ? line1 : blankWord('line1')}</div>
+        <div id="editor-line-2">{line2.length > 0 ? line2 : blankWord('line2')}</div>
+        <div id="editor-line-3">{line3.length > 0 ? line3 : blankWord('line3')}</div>
       </div>
     )
   }
