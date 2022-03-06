@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class AddWordAfter extends React.Component {
   render() {
-    const { line, index, closeWordMenus, wordInput, addAfter, handleChange, toggleAdd, handleAdd } = this.props;
+    const { line, index, wordInput, addAfter, handleChange, toggleAdd, handleAdd } = this.props;
     return (
       <div className="add-word-container">
         <button className="word-menu-item" onClick={() => toggleAdd('addAfter')}>Add Words After</button>
@@ -13,10 +13,8 @@ export default class AddWordAfter extends React.Component {
           value={wordInput} 
           autoFocus
         />}
-        {addAfter && <button className="add-word" onClick={() => {
-          handleAdd(line, index + 1, wordInput);
-          closeWordMenus();
-        }}>Add</button>}
+        {addAfter && <button className="add-word" onClick={() => handleAdd(line, index + 1, wordInput)}
+        >Add</button>}
       </div>
     )
   }

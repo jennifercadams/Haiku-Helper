@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class EditWord extends React.Component {
   render() {
-    const { line, index, closeWordMenus, wordInput, edit, handleChange, toggleAdd, replaceWord } = this.props;
+    const { line, index, wordInput, edit, handleChange, toggleAdd, replaceWord } = this.props;
     return (
       <div className="add-word-container">
         <button className="word-menu-item" onClick={() => toggleAdd('edit')}>Edit Word</button>
@@ -13,10 +13,8 @@ export default class EditWord extends React.Component {
           value={wordInput} 
           autoFocus
         />}
-        {edit && <button className="add-word" onClick={() => {
-          replaceWord(line, index, wordInput);
-          closeWordMenus();
-        }}>Add</button>}
+        {edit && <button className="add-word" onClick={() => replaceWord(line, index, wordInput)}
+        >Add</button>}
     </div>
     )
   }

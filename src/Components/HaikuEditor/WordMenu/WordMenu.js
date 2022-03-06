@@ -28,7 +28,8 @@ export default class WordMenu extends React.Component {
   }
 
   handleChange(e) {
-    this.setState({ wordInput: e.target.value });
+    const cleanInput = e.target.value.replace(/[^\sa-z'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ');
+    this.setState({ wordInput: cleanInput });
   }
 
   toggleAdd(addType) {
@@ -48,9 +49,13 @@ export default class WordMenu extends React.Component {
 
   async handleAdd(line, i, input) {
     const awaitAdd = await this.props.addWord;
-    const inputWords = input.split(' ').reverse();
-    inputWords.forEach(word => awaitAdd(line, i, word));
-    this.setState({ wordInput: '', addBefore: false, addAfter: false });
+    const inputWords = input.trim().split(' ').reverse();
+    inputWords.forEach(word => {
+      if (word !== '') {
+        awaitAdd(line, i, word)
+      }
+    });
+    this.props.closeWordMenus();
   }
 
   async getSynonyms(word) {
@@ -68,7 +73,7 @@ export default class WordMenu extends React.Component {
   async replaceWord(line, i, newWord) {
     const awaitDelete = await this.props.deleteWord;
     const awaitAdd = await this.props.addWord;
-    const newWords = newWord.split(' ').reverse();
+    const newWords = newWord.trim().split(' ').reverse();
     awaitDelete(line, i);
     newWords.forEach(word => awaitAdd(line, i, word));
     this.props.closeWordMenus();
@@ -79,7 +84,6 @@ export default class WordMenu extends React.Component {
     const addProps = {
       line: line,
       index: index,
-      closeWordMenus: closeWordMenus,
       wordInput: this.state.wordInput,
       edit: this.state.edit,
       addBefore: this.state.addBefore,

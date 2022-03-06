@@ -144,7 +144,7 @@ export default class App extends React.Component {
           ...state.haiku[line],
           text: [
             ...state.haiku[line].text.slice(0, i),
-            word.trim().replace(/[^a-z'-\.\,\?;:]/gi, ''),
+            word.trim(),
             ...state.haiku[line].text.slice(i)
           ]
         }

@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class EmptyLineButton extends React.Component {
   render() {
-    const { line, index, closeWordMenus, wordInput, addAfter, handleChange, toggleAdd, handleAdd } = this.props;
+    const { line, index, wordInput, addAfter, handleChange, toggleAdd, handleAdd } = this.props;
     return (
       <div className="add-word-container">
         <button 
@@ -16,10 +16,8 @@ export default class EmptyLineButton extends React.Component {
           value={wordInput} 
           autoFocus
         />}
-        {addAfter && <button className="add-word" onClick={() => {
-          handleAdd(line, index, wordInput);
-          closeWordMenus();
-        }}>Add</button>}
+        {addAfter && <button className="add-word" onClick={() => handleAdd(line, index, wordInput)}
+        >Add</button>}
       </div>
     )
   }
