@@ -1,6 +1,11 @@
 import React from 'react';
 
 import './WordMenu.css';
+import DeleteWord from './wordMenuButtons/DeleteWord';
+import FindSynonym from './wordMenuButtons/FindSynonym';
+import AddWordBefore from './wordMenuButtons/AddWordBefore';
+import AddWordAfter from './wordMenuButtons/AddWordAfter';
+import EmptyLineButton from './wordMenuButtons/EmptyLineButton';
 
 export default class WordMenu extends React.Component {
   constructor(props) {
@@ -34,65 +39,32 @@ export default class WordMenu extends React.Component {
 
   render() {
     const { line, index, deleteWord, closeWordMenus, blankWord } = this.props;
+    const addProps = {
+      line: line,
+      index: index,
+      closeWordMenus: closeWordMenus,
+      wordInput: this.state.wordInput,
+      addBefore: this.state.addBefore,
+      addAfter: this.state.addAfter,
+      handleChange: this.handleChange,
+      toggleAdd: this.toggleAdd,
+      handleAdd: this.handleAdd
+    }
     return (
       <>
       {!blankWord && <div className="word-menu">
-        <button className="word-menu-item" onClick={() => {
-          deleteWord(line, index);
-          closeWordMenus();
-        }}>
-          Delete Word
-        </button>
-        <div className="add-word-container">
-          <button className="word-menu-item">Find Synonym</button>
-        </div>
-        <div className="add-word-container">
-          <button className="word-menu-item" onClick={() => this.toggleAdd('addBefore')}>Add Word Before</button>
-          {this.state.addBefore && <input type="text" 
-            className="add-word" 
-            maxLength="30" 
-            onChange={this.handleChange}
-            value={this.state.wordInput} 
-            autoFocus
-          />}
-          {this.state.addBefore && <button className="add-word" onClick={() => {
-            this.handleAdd(line, index, this.state.wordInput);
-            closeWordMenus();
-          }}>Add</button>}
-        </div>
-        <div className="add-word-container">
-          <button className="word-menu-item" onClick={() => this.toggleAdd('addAfter')}>Add Word After</button>
-          {this.state.addAfter && <input type="text" 
-            className="add-word" 
-            maxLength="30" 
-            onChange={this.handleChange}
-            value={this.state.wordInput} 
-            autoFocus
-          />}
-          {this.state.addAfter && <button className="add-word" onClick={() => {
-            this.handleAdd(line, index + 1, this.state.wordInput);
-            closeWordMenus();
-          }}>Add</button>}
-        </div>
+        <DeleteWord 
+          line={line} 
+          index={index} 
+          deleteWord={deleteWord} 
+          closeWordMenus={closeWordMenus} 
+        />
+        <FindSynonym />
+        <AddWordBefore {...addProps} />
+        <AddWordAfter {...addProps} />
       </div>}
       {blankWord && <div className="word-menu">
-        <div className="add-word-container">
-          <button 
-            className="word-menu-item blank-word" 
-            onClick={() => this.toggleAdd('addAfter')}
-          >Add Word</button>
-          {this.state.addAfter && <input type="text" 
-            className="add-word" 
-            maxLength="30" 
-            onChange={this.handleChange}
-            value={this.state.wordInput} 
-            autoFocus
-          />}
-          {this.state.addAfter && <button className="add-word" onClick={() => {
-            this.handleAdd(line, index, this.state.wordInput);
-            closeWordMenus();
-          }}>Add</button>}
-        </div>
+        <EmptyLineButton {...addProps} />
       </div>}
       </>
     )
