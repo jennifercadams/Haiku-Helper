@@ -2,6 +2,7 @@ import React from 'react';
 
 import './WordMenu.css';
 import DeleteWord from './wordMenuButtons/DeleteWord';
+import EditWord from './wordMenuButtons/EditWord';
 import FindSynonym from './wordMenuButtons/FindSynonym';
 import AddWordBefore from './wordMenuButtons/AddWordBefore';
 import AddWordAfter from './wordMenuButtons/AddWordAfter';
@@ -15,6 +16,7 @@ export default class WordMenu extends React.Component {
     this.state = {
       wordInput: '',
       synonyms: [],
+      edit: false,
       addBefore: false,
       addAfter: false
     }
@@ -32,9 +34,15 @@ export default class WordMenu extends React.Component {
   toggleAdd(addType) {
     this.setState({ synonyms: [] })
     if (addType === 'addBefore') {
-      this.setState(state => ({ addBefore: !state.addBefore, addAfter: false, wordInput: '' }));
+      this.setState(state => ({ edit: false, addBefore: !state.addBefore, addAfter: false, wordInput: '' }));
+    } else if (addType === 'addAfter') {
+      this.setState(state => ({ edit: false, addBefore: false, addAfter: !state.addAfter, wordInput: '' }));
     } else {
-      this.setState(state => ({ addBefore: false, addAfter: !state.addAfter, wordInput: '' }));
+      if (this.state.edit === false) {
+        this.setState({ edit: true, addBefore: false, addAfter: false, wordInput: this.props.word });
+      } else {
+        this.setState({ edit: false, addBefore: false, addAfter: false, wordInput: '' });
+      }
     }
   }
 
@@ -73,6 +81,7 @@ export default class WordMenu extends React.Component {
       index: index,
       closeWordMenus: closeWordMenus,
       wordInput: this.state.wordInput,
+      edit: this.state.edit,
       addBefore: this.state.addBefore,
       addAfter: this.state.addAfter,
       handleChange: this.handleChange,
@@ -87,6 +96,11 @@ export default class WordMenu extends React.Component {
           index={index} 
           deleteWord={deleteWord} 
           closeWordMenus={closeWordMenus} 
+        />
+        <EditWord 
+          word={word}
+          replaceWord={this.replaceWord}
+          {...addProps}
         />
         <FindSynonym 
           word={word}
