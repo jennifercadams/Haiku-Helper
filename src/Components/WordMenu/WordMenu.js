@@ -7,17 +7,21 @@ import AddWordBefore from './wordMenuButtons/AddWordBefore';
 import AddWordAfter from './wordMenuButtons/AddWordAfter';
 import EmptyLineButton from './wordMenuButtons/EmptyLineButton';
 
+const fetchSynonyms = 'https://api.datamuse.com/words?max=6&ml=';
+
 export default class WordMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       wordInput: '',
+      synonyms: [],
       addBefore: false,
       addAfter: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.toggleAdd = this.toggleAdd.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
+    this.getSynonyms = this.getSynonyms.bind(this);
   }
 
   handleChange(e) {
@@ -35,6 +39,13 @@ export default class WordMenu extends React.Component {
   handleAdd(line, i, word) {
     this.props.addWord(line, i, word);
     this.setState({ wordInput: '', addBefore: false, addAfter: false });
+  }
+
+  async getSynonyms(word) {
+    const synonyms = await fetch(fetchSynonyms + word)
+      .then(response => response.json())
+      .then(jsonResponse => jsonResponse.map(result => result.word));
+    this.setState({ synonyms: synonyms });
   }
 
   render() {
@@ -59,7 +70,11 @@ export default class WordMenu extends React.Component {
           deleteWord={deleteWord} 
           closeWordMenus={closeWordMenus} 
         />
-        <FindSynonym />
+        <FindSynonym 
+          synonyms={this.state.synonyms}
+          getSynonyms={this.state.getSynonyms}
+          {...addProps}
+        />
         <AddWordBefore {...addProps} />
         <AddWordAfter {...addProps} />
       </div>}
