@@ -22,7 +22,7 @@ export default class WordMenu extends React.Component {
     this.toggleAdd = this.toggleAdd.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.getSynonyms = this.getSynonyms.bind(this);
-    this.replaceWithSynonym = this.replaceWithSynonym.bind(this);
+    this.replaceWord = this.replaceWord.bind(this);
   }
 
   handleChange(e) {
@@ -57,12 +57,12 @@ export default class WordMenu extends React.Component {
     }
   }
 
-  async replaceWithSynonym(line, i, synonym) {
+  async replaceWord(line, i, newWord) {
     const awaitDelete = await this.props.deleteWord;
     const awaitAdd = await this.props.addWord;
-    const synonymWords = synonym.split(' ').reverse();
+    const newWords = newWord.split(' ').reverse();
     awaitDelete(line, i);
-    synonymWords.forEach(word => awaitAdd(line, i, word));
+    newWords.forEach(word => awaitAdd(line, i, word));
     this.props.closeWordMenus();
   }
 
@@ -94,7 +94,7 @@ export default class WordMenu extends React.Component {
           index={index} 
           synonyms={this.state.synonyms}
           getSynonyms={this.getSynonyms}
-          replaceWithSynonym={this.replaceWithSynonym}
+          replaceWord={this.replaceWord}
         />
         <AddWordBefore {...addProps} />
         <AddWordAfter {...addProps} />
