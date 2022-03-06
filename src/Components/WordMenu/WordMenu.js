@@ -22,6 +22,7 @@ export default class WordMenu extends React.Component {
     this.toggleAdd = this.toggleAdd.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.getSynonyms = this.getSynonyms.bind(this);
+    this.replaceWithSynonym = this.replaceWithSynonym.bind(this);
   }
 
   handleChange(e) {
@@ -29,6 +30,7 @@ export default class WordMenu extends React.Component {
   }
 
   toggleAdd(addType) {
+    this.setState({ synonyms: [] })
     if (addType === 'addBefore') {
       this.setState(state => ({ addBefore: !state.addBefore, addAfter: false, wordInput: '' }));
     } else {
@@ -42,14 +44,27 @@ export default class WordMenu extends React.Component {
   }
 
   async getSynonyms(word) {
-    const synonyms = await fetch(fetchSynonyms + word)
-      .then(response => response.json())
-      .then(jsonResponse => jsonResponse.map(result => result.word));
-    this.setState({ synonyms: synonyms });
+    if (this.state.synonyms.length === 0) {
+      this.setState({ addBefore: false, addAfter: false })
+      const synonyms = await fetch(fetchSynonyms + word)
+        .then(response => response.json())
+        .then(jsonResponse => jsonResponse.map(result => result.word));
+      this.setState({ synonyms: synonyms });
+    } else {
+      this.setState({ synonyms: [] })
+    }
+  }
+
+  async replaceWithSynonym(line, i, synonym) {
+    const awaitDelete = await this.props.deleteWord;
+    const awaitAdd = await this.props.addWord;
+    awaitDelete(line, i);
+    awaitAdd(line, i, synonym);
+    this.props.closeWordMenus();
   }
 
   render() {
-    const { line, index, deleteWord, closeWordMenus, blankWord } = this.props;
+    const { word, line, index, deleteWord, closeWordMenus, blankWord } = this.props;
     const addProps = {
       line: line,
       index: index,
@@ -71,9 +86,12 @@ export default class WordMenu extends React.Component {
           closeWordMenus={closeWordMenus} 
         />
         <FindSynonym 
+          word={word}
+          line={line} 
+          index={index} 
           synonyms={this.state.synonyms}
-          getSynonyms={this.state.getSynonyms}
-          {...addProps}
+          getSynonyms={this.getSynonyms}
+          replaceWithSynonym={this.replaceWithSynonym}
         />
         <AddWordBefore {...addProps} />
         <AddWordAfter {...addProps} />

@@ -5,8 +5,15 @@
   align-items: flex-start;
 }
 
-.word-menu-item, .add-word {
+.word-menu-item, .add-word, .synonym {
   padding: 5px;
   font-family: inherit;
   font-size: inherit;
 }
+
+.synonym-container {
+  position: absolute;
+  display: inline-flex;
+  flex-direction: column;
+}
+
