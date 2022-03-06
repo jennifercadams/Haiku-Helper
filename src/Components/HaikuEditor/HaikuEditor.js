@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './HaikuEditor.css';
-import Word from '../Word/Word';
+import Word from './Word/Word';
 
 export default class HaikuEditor extends React.Component {
   constructor(props) {
