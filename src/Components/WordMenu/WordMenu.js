@@ -38,8 +38,10 @@ export default class WordMenu extends React.Component {
     }
   }
 
-  handleAdd(line, i, word) {
-    this.props.addWord(line, i, word);
+  async handleAdd(line, i, input) {
+    const awaitAdd = await this.props.addWord;
+    const inputWords = input.split(' ').reverse();
+    inputWords.forEach(word => awaitAdd(line, i, word));
     this.setState({ wordInput: '', addBefore: false, addAfter: false });
   }
 

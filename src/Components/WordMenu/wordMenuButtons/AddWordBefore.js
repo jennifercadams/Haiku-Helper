@@ -5,7 +5,7 @@ export default class AddWordBefore extends React.Component {
     const { line, index, closeWordMenus, wordInput, addBefore, handleChange, toggleAdd, handleAdd } = this.props;
     return (
       <div className="add-word-container">
-        <button className="word-menu-item" onClick={() => toggleAdd('addBefore')}>Add Word Before</button>
+        <button className="word-menu-item" onClick={() => toggleAdd('addBefore')}>Add Words Before</button>
         {addBefore && <input type="text" 
           className="add-word" 
           maxLength="30" 

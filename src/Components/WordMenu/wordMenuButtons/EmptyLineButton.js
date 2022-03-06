@@ -8,7 +8,7 @@ export default class EmptyLineButton extends React.Component {
         <button 
           className="word-menu-item blank-word" 
           onClick={() => toggleAdd('addAfter')}
-        >Add Word</button>
+        >Add Words</button>
         {addAfter && <input type="text" 
           className="add-word" 
           maxLength="30" 
