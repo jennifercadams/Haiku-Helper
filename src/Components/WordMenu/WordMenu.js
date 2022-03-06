@@ -58,8 +58,9 @@ export default class WordMenu extends React.Component {
   async replaceWithSynonym(line, i, synonym) {
     const awaitDelete = await this.props.deleteWord;
     const awaitAdd = await this.props.addWord;
+    const synonymWords = synonym.split(' ').reverse();
     awaitDelete(line, i);
-    awaitAdd(line, i, synonym);
+    synonymWords.forEach(word => awaitAdd(line, i, word));
     this.props.closeWordMenus();
   }
 
