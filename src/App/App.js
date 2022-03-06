@@ -30,6 +30,7 @@ export default class App extends React.Component {
     this.updateSyllableCount = this.updateSyllableCount.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
     this.addWord = this.addWord.bind(this);
+    this.startOver = this.startOver.bind(this);
   }
 
   start() {
@@ -151,12 +152,16 @@ export default class App extends React.Component {
     }), () => this.updateSyllableCount(line));
   }
 
+  startOver() {
+    this.setState({ editor: false, haiku: { line1: {}, line2: {}, line3: {} } });
+  }
+
   render() {
     return (
       <main>
         {this.state.welcome && <Welcome start={this.start} />}
         {!this.state.welcome && <Header />}
-        {!this.state.welcome && <HaikuForm 
+        {!this.state.welcome && !this.state.editor && <HaikuForm 
           {...this.state}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit} 
@@ -166,6 +171,7 @@ export default class App extends React.Component {
           haiku={this.state.haiku}
           deleteWord={this.deleteWord}
           addWord={this.addWord}
+          startOver={this.startOver}
         />}
       </main>
     )

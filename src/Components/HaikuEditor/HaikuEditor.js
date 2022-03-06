@@ -78,7 +78,6 @@ export default class HaikuEditor extends React.Component {
     />;
     return (
       <div id="haiku-editor">
-        <h2>Edit Haiku</h2>
         <div id="editor-line-1">
           {line1.length > 0 ? line1 : blankWord('line1')}
           <span style={this.props.haiku.line1.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
@@ -97,6 +96,7 @@ export default class HaikuEditor extends React.Component {
             {this.props.haiku.line3.syllables}
           </span>
         </div>
+        <button id="start-over" onClick={this.props.startOver}>Start Over</button>
       </div>
     )
   }
