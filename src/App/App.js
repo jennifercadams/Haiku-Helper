@@ -89,6 +89,9 @@ export default class App extends React.Component {
     const lineText = this.state.haiku[line].text.slice();
     console.log(lineText);
     for (let i = 0; i < lineText.length; i++) {
+      if (lineText[i].match(/^[0-9]+nd$/)) {
+        counter++;
+      }
       if (lineText[i].match(/[0-9]/)) {
         const number = Number(lineText[i].replace(/[^0-9]/g, ''));
         const numberWords = numberToWords.convert(number).split(' ');
