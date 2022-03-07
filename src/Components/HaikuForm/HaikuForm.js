@@ -51,9 +51,9 @@ export default class HaikuForm extends React.Component {
           </span>
         </label>
         <p id="error">{formError}</p>
-        <div>
-          <button id="count-syllables" onClick={getSyllableCount}>Count Syllables</button>
-          <input type="submit" value="Go to Editor" />
+        <div className="nav-buttons">
+          <button className="nav-button" onClick={getSyllableCount}>Count Syllables</button>
+          <input className="nav-button" type="submit" value="Go to Editor" />
         </div>
       </form>
     )

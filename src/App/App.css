@@ -7,6 +7,19 @@ p {
   margin: 10px 0;
 }
 
+.nav-buttons {
+  margin-top: 15px;
+}
+
+.nav-button {
+  font-size: inherit;
+  font-family: inherit;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 10px;
+}
+
+
 body {
   font-family: 'Open Sans';
   text-align: center;

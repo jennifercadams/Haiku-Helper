@@ -5,11 +5,8 @@
   font-size: 18px;
 }
 
-#haiku-form input {
-  margin: 15px 10px;
-}
-
 #haiku-form input[type="text"] {
+  margin: 15px 10px;
   height: 24px;
   width: 280px;
   font-size: 16px;
@@ -25,11 +22,4 @@
   margin: 0;
   font-size: 16px;
   color: red;
-}
-
-#haiku-form input[type="submit"], #count-syllables {
-  font-size: inherit;
-  font-family: inherit;
-  padding: 5px 10px;
-  border-radius: 10px;
 }

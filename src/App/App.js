@@ -26,57 +26,34 @@ export default class App extends React.Component {
       history: []
     }
     this.start = this.start.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.goToEditor = this.goToEditor.bind(this);
+    this.startOver = this.startOver.bind(this);
+    this.backToEditor = this.backToEditor.bind(this);
     this.countSyllables = this.countSyllables.bind(this);
     this.getSyllableCount = this.getSyllableCount.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.goToEditor = this.goToEditor.bind(this);
     this.updateSyllableCount = this.updateSyllableCount.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
     this.addWord = this.addWord.bind(this);
-    this.startOver = this.startOver.bind(this);
     this.drawHaikuText = this.drawHaikuText.bind(this);
+    this.goToCanvas = this.goToCanvas.bind(this);
   }
+
+  // Navigation methods
 
   start() {
     this.setState({welcome: false})
   }
 
-  handleChange(e) {
-    this.setState(state => ({
-      formError: '',
-      editor: false,
-      [e.target.id]: e.target.value,
-      [e.target.id + 'Syllables']: null,
-      haiku: {
-        ...state.haiku, 
-        [e.target.id]: { 
-          text: e.target.value.trim().replace(/[^\sa-z0-9'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ').split(' '), 
-          syllables: null
-        }
-      }
-    }));
+  startOver() {
+    this.setState({ editor: false, canvas: false, haiku: { line1: {}, line2: {}, line3: {} } });
   }
 
-  async goToEditor(e) {
-    e.preventDefault();
-    if (this.state.line1 && this.state.line2 && this.state.line3) {
-      const areSyllablesCounted = this.state.haiku.line1.syllables
-        && this.state.haiku.line2.syllables
-        && this.state.haiku.line3.syllables;
-      if (!areSyllablesCounted) {
-        await this.getSyllableCount(e);
-      }
-      this.setState(state => ({
-        editor: true,
-        history: [this.state.haiku, ...state.history],
-        line1: '', line1Syllables: null,
-        line2: '', line2Syllables: null,
-        line3: '', line3Syllables: null
-      }))
-    } else {
-      this.setState({ formError: 'Please enter text in each line. '});
-    }
+  backToEditor() {
+    this.setState({ editor: true, canvas: false });
   }
+
+  // Syllable count methods
 
   async countSyllables(line) {
     const getWordSyllables = async (word) => {
@@ -128,6 +105,47 @@ export default class App extends React.Component {
     }
   }
 
+  // Haiku Form methods
+
+  handleChange(e) {
+    this.setState(state => ({
+      formError: '',
+      editor: false,
+      [e.target.id]: e.target.value,
+      [e.target.id + 'Syllables']: null,
+      haiku: {
+        ...state.haiku, 
+        [e.target.id]: { 
+          text: e.target.value.trim().replace(/[^\sa-z0-9'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ').split(' '), 
+          syllables: null
+        }
+      }
+    }));
+  }
+
+  async goToEditor(e) {
+    e.preventDefault();
+    if (this.state.line1 && this.state.line2 && this.state.line3) {
+      const areSyllablesCounted = this.state.haiku.line1.syllables
+        && this.state.haiku.line2.syllables
+        && this.state.haiku.line3.syllables;
+      if (!areSyllablesCounted) {
+        await this.getSyllableCount(e);
+      }
+      this.setState(state => ({
+        editor: true,
+        history: [this.state.haiku, ...state.history],
+        line1: '', line1Syllables: null,
+        line2: '', line2Syllables: null,
+        line3: '', line3Syllables: null
+      }))
+    } else {
+      this.setState({ formError: 'Please enter text in each line. '});
+    }
+  }
+
+  // Haiku Editor methods
+
   async updateSyllableCount(line) {
     const newCount = await this.countSyllables(line);
     this.setState(state => ({
@@ -169,9 +187,7 @@ export default class App extends React.Component {
     }), () => this.updateSyllableCount(line));
   }
 
-  startOver() {
-    this.setState({ editor: false, canvas: false, haiku: { line1: {}, line2: {}, line3: {} } });
-  }
+  // Haiku Canvas methods
 
   drawHaikuText() {
     const canvas = document.getElementById('haiku-canvas').getContext('2d');
@@ -181,6 +197,10 @@ export default class App extends React.Component {
     canvas.fillText(this.state.haiku.line1.text.join(' '), 200, 100);
     canvas.fillText(this.state.haiku.line2.text.join(' '), 200, 150);
     canvas.fillText(this.state.haiku.line3.text.join(' '), 200, 200);
+  }
+
+  goToCanvas() {
+    this.setState({ editor: false, canvas: true }, () => this.drawHaikuText());
   }
 
   render() {
@@ -202,6 +222,7 @@ export default class App extends React.Component {
           deleteWord={this.deleteWord}
           addWord={this.addWord}
           startOver={this.startOver}
+          goToCanvas={this.goToCanvas}
         />}
         {showCanvas && <HaikuCanvas />}
       </main>
