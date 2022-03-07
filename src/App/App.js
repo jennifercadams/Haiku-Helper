@@ -43,7 +43,7 @@ export default class App extends React.Component {
   }
 
   startOver() {
-    this.setState({ editor: false, canvas: false, haiku: { line1: {}, line2: {}, line3: {} } });
+    this.setState({ editor: false, canvas: false, formError: '', haiku: { line1: {}, line2: {}, line3: {} } });
   }
 
   backToEditor() {
@@ -153,6 +153,7 @@ export default class App extends React.Component {
 
   deleteWord(line, i) {
     this.setState(state => ({
+      formError: '',
       haiku: {
         ...state.haiku,
         [line]: {
@@ -168,6 +169,7 @@ export default class App extends React.Component {
 
   addWord(line, i, word) {
     this.setState(state => ({
+      formError: '',
       haiku: {
         ...state.haiku,
         [line]: {
@@ -183,7 +185,14 @@ export default class App extends React.Component {
   }
 
   goToCanvas() {
-    this.setState({ editor: false, canvas: true });
+    const fiveSevenFive = this.state.haiku.line1.syllables === 5
+      && this.state.haiku.line2.syllables === 7
+      && this.state.haiku.line3.syllables === 5;
+    if (fiveSevenFive) {
+      this.setState({ editor: false, canvas: true });
+    } else {
+      this.setState({ formError: 'Your syllable counts should be 5 - 7 - 5'})
+    }
   }
 
   render() {
@@ -202,6 +211,7 @@ export default class App extends React.Component {
         />}
         {showEditor && <HaikuEditor 
           haiku={this.state.haiku}
+          formError={this.state.formError}
           deleteWord={this.deleteWord}
           addWord={this.addWord}
           startOver={this.startOver}

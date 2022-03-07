@@ -34,7 +34,7 @@ export default class HaikuEditor extends React.Component {
   }
 
   render() {
-    const { haiku, startOver, goToCanvas } = this.props;
+    const { haiku, formError, startOver, goToCanvas } = this.props;
     const methods = {
       closeWordMenus: this.closeWordMenus,
       toggleWordMenu: this.toggleWordMenu,
@@ -99,6 +99,7 @@ export default class HaikuEditor extends React.Component {
             </span>
           </div>
         </div>
+        <p id="error">{formError}</p>
         <div className="nav-buttons">
           <button className="nav-button" onClick={startOver}>Start Over</button>
           <button className="nav-button" onClick={goToCanvas}>Continue</button>
