@@ -4,14 +4,13 @@ import './HaikuForm.css';
 
 export default class HaikuForm extends React.Component {
   render() {
-    const { handleChange, handleSubmit, 
+    const { handleChange, goToEditor, formError, getSyllableCount, 
       line1, line1Syllables, 
       line2, line2Syllables, 
-      line3, line3Syllables, 
-      formError, getSyllableCount 
+      line3, line3Syllables      
     } = this.props;
     return (
-      <form id="haiku-form" onSubmit={handleSubmit}>
+      <form id="haiku-form" onSubmit={goToEditor}>
         <label htmlFor="line1">Line 1
           <input type="text"
             name="line1"
