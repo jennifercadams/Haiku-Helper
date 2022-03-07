@@ -21,7 +21,7 @@ export default class App extends React.Component {
       line2: '', line2Syllables: null,
       line3: '', line3Syllables: null,
       haiku: { line1: {}, line2: {}, line3: {} },
-      canvasSettings: { background: '#ffffff', font: 'Open Sans', textColor: '#000000'},
+      canvasSettings: { background: '#ffffff', font: 'Open Sans', textColor: '#000000' },
       history: []
     }
     this.start = this.start.bind(this);
