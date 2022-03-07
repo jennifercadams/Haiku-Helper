@@ -31,7 +31,6 @@ export default class CanvasMenu extends React.Component {
       <div id="canvas-menu">
         <Background background={this.state.background} {...props} />
         <Font font={this.state.font} {...props} />
-        <button className="canvas-button">Share</button>
         <button className="canvas-button">Download</button>
       </div>
     )
