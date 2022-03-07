@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Font extends React.Component {
   render() {
-    const { updateSettings } = this.props;
+    const { settings, updateSettings } = this.props;
     return (
       <div className="canvas-button-container">
         <button className="canvas-button">Font</button>
@@ -19,6 +19,7 @@ export default class Font extends React.Component {
           <option value="Trebuchet MS">Trebuchet MS</option>
           <option value="Verdana">Verdana</option>
         </select>
+        <input type="color" id="textColor" value={settings.textColor} onChange={updateSettings} />
       </div>
     )
   }

@@ -1,20 +1,14 @@
 #canvas-container {
-  display: grid;
-  grid-template-areas:
-      "menu canvas"
-      "nav nav";
   justify-content: center;
 }
 
 #canvas-menu {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
 }
 
 #haiku-canvas {
   border: 2px solid black;
-}
-
-.nav-buttons {
-  grid-area: nav;
 }
