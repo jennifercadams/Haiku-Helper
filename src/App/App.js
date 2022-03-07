@@ -6,6 +6,7 @@ import Welcome from '../Components/Welcome/Welcome';
 import Header from '../Components/Header/Header';
 import HaikuForm from '../Components/HaikuForm/HaikuForm';
 import HaikuEditor from '../Components/HaikuEditor/HaikuEditor';
+import HaikuCanvas from '../Components/HaikuCanvas/HaikuCanvas';
 
 const fetchSyllables = 'https://api.datamuse.com/words?md=s&max=1&sp=';
 
@@ -31,6 +32,7 @@ export default class App extends React.Component {
     this.deleteWord = this.deleteWord.bind(this);
     this.addWord = this.addWord.bind(this);
     this.startOver = this.startOver.bind(this);
+    this.drawHaikuText = this.drawHaikuText.bind(this);
   }
 
   start() {
@@ -69,6 +71,7 @@ export default class App extends React.Component {
         line2: '', line2Syllables: null,
         line3: '', line3Syllables: null
       }))
+      this.drawHaikuText();
     } else {
       this.setState({ formError: 'Please enter text in each line. '});
     }
@@ -133,7 +136,10 @@ export default class App extends React.Component {
           ]
         }
       }
-    }), () => this.updateSyllableCount(line));
+    }), () => {
+      this.updateSyllableCount(line);
+      this.drawHaikuText();
+    });
   }
 
   addWord(line, i, word) {
@@ -149,11 +155,24 @@ export default class App extends React.Component {
           ]
         }
       }
-    }), () => this.updateSyllableCount(line));
+    }), () => {
+      this.updateSyllableCount(line);
+      this.drawHaikuText();
+    });
   }
 
   startOver() {
     this.setState({ editor: false, haiku: { line1: {}, line2: {}, line3: {} } });
+  }
+
+  drawHaikuText() {
+    const canvas = document.getElementById('haiku-canvas').getContext('2d');
+    canvas.clearRect(0, 0, 400, 300);
+    canvas.font = "24px Open Sans";
+    canvas.textAlign = "center";
+    canvas.fillText(this.state.haiku.line1.text.join(' '), 200, 100);
+    canvas.fillText(this.state.haiku.line2.text.join(' '), 200, 150);
+    canvas.fillText(this.state.haiku.line3.text.join(' '), 200, 200);
   }
 
   render() {
@@ -173,6 +192,7 @@ export default class App extends React.Component {
           addWord={this.addWord}
           startOver={this.startOver}
         />}
+        {!this.state.welcome && this.state.editor && <HaikuCanvas />}
       </main>
     )
   }
