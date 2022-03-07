@@ -1,12 +1,25 @@
-#canvas-container {
-  justify-content: center;
-}
-
 #canvas-menu {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
+}
+
+.canvas-button {
+  font-size: 16px;
+  font-family: inherit;
+  padding: 5px 10px;
+}
+
+.options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.option {
+  height: 30px;
+  width: 110px;
 }
 
 #haiku-canvas {
