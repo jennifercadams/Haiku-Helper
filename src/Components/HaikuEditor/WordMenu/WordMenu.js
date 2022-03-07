@@ -28,7 +28,7 @@ export default class WordMenu extends React.Component {
   }
 
   handleChange(e) {
-    const cleanInput = e.target.value.replace(/[^\sa-z'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ');
+    const cleanInput = e.target.value.replace(/[^\sa-z0-9'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ');
     this.setState({ wordInput: cleanInput });
   }
 
@@ -52,7 +52,7 @@ export default class WordMenu extends React.Component {
     const inputWords = input.trim().split(' ').reverse();
     inputWords.forEach(word => {
       if (word !== '') {
-        awaitAdd(line, i, word)
+        awaitAdd(line, i, word);
       }
     });
     this.props.closeWordMenus();

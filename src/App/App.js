@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './App.css';
+import { numberToWords } from '../util/numberToWords';
 
 import Welcome from '../Components/Welcome/Welcome';
 import Header from '../Components/Header/Header';
@@ -48,7 +49,7 @@ export default class App extends React.Component {
       haiku: {
         ...state.haiku, 
         [e.target.id]: { 
-          text: e.target.value.trim().replace(/[^\sa-z'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ').split(' '), 
+          text: e.target.value.trim().replace(/[^\sa-z0-9'-\.\,\?;:]/gi, '').replace(/\s\s+/g, ' ').split(' '), 
           syllables: null
         }
       }
@@ -85,8 +86,18 @@ export default class App extends React.Component {
       return count;
     }
     let counter = 0;
-    for (const word of this.state.haiku[line].text) {
-      const cleanWord = word.replace(/[^a-z]/gi, '');
+    const lineText = this.state.haiku[line].text.slice();
+    console.log(lineText);
+    for (let i = 0; i < lineText.length; i++) {
+      if (lineText[i].match(/[0-9]/)) {
+        const number = Number(lineText[i].replace(/[^0-9]/g, ''));
+        const numberWords = numberToWords.convert(number).split(' ');
+        lineText.splice(i, 1, ...numberWords)
+      }
+    }
+    console.log(lineText);
+    for (const word of lineText) {
+      let cleanWord = word.replace(/[^a-z0-9]/gi, '');
       const syllables = await getWordSyllables(cleanWord);
       counter += syllables;
     }
