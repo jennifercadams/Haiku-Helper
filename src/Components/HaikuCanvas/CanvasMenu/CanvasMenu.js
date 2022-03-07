@@ -11,6 +11,7 @@ export default class CanvasMenu extends React.Component {
       font: false
     }
     this.toggleOptions = this.toggleOptions.bind(this);
+    this.downloadHaiku = this.downloadHaiku.bind(this);
   }
 
   toggleOptions(optionType) {
@@ -19,6 +20,17 @@ export default class CanvasMenu extends React.Component {
     } else if (optionType === 'font') {
       this.setState(state => ({ background: false, font: !state.font }))
     }
+  }
+
+  downloadHaiku() {
+    const canvas = document.getElementById('haiku-canvas');
+    const image = canvas.toDataURL();
+    const link = document.createElement('a');
+    link.download = 'my-haiku.png';
+    link.href = image;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   render() {
@@ -31,7 +43,7 @@ export default class CanvasMenu extends React.Component {
       <div id="canvas-menu">
         <Background background={this.state.background} {...props} />
         <Font font={this.state.font} {...props} />
-        <button className="canvas-button">Download</button>
+        <button className="canvas-button" onClick={this.downloadHaiku}>Download</button>
       </div>
     )
   }
