@@ -21,6 +21,7 @@ export default class App extends React.Component {
       line2: '', line2Syllables: null,
       line3: '', line3Syllables: null,
       haiku: { line1: {}, line2: {}, line3: {} },
+      canvasSettings: { background: '#ffffff', font: 'Open Sans', textColor: '#000000'},
       history: []
     }
     this.start = this.start.bind(this);
@@ -34,6 +35,7 @@ export default class App extends React.Component {
     this.deleteWord = this.deleteWord.bind(this);
     this.addWord = this.addWord.bind(this);
     this.goToCanvas = this.goToCanvas.bind(this);
+    this.updateCanvasSettings = this.updateCanvasSettings.bind(this);
   }
 
   // Navigation methods
@@ -197,8 +199,16 @@ export default class App extends React.Component {
       this.setState({ 
         formError: 'Your syllable counts are not 5 - 7 - 5.', 
         formError2: 'Click "Continue" again to proceed anyway.'
-      })
+      });
     }
+  }
+
+  // Haiku Canvas methods
+
+  updateCanvasSettings(e) {
+    this.setState(state => ({
+      canvasSettings: { ...state.canvasSettings, [e.target.id]: e.target.value }
+    }));
   }
 
   render() {
@@ -226,8 +236,10 @@ export default class App extends React.Component {
         />}
         {showCanvas && <HaikuCanvas 
           haiku={this.state.haiku}
+          settings={this.state.canvasSettings}
           startOver={this.startOver}
           backToEditor={this.backToEditor}
+          updateSettings={this.updateCanvasSettings}
         />}
       </main>
     )
