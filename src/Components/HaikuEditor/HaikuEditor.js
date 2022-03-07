@@ -34,13 +34,14 @@ export default class HaikuEditor extends React.Component {
   }
 
   render() {
+    const { haiku, startOver } = this.props;
     const methods = {
       closeWordMenus: this.closeWordMenus,
       toggleWordMenu: this.toggleWordMenu,
       deleteWord: this.props.deleteWord,
       addWord: this.props.addWord
     }
-    const line1 = this.props.haiku.line1.text.map((word, i) => <Word 
+    const line1 = haiku.line1.text.map((word, i) => <Word 
       blankWord={false}
       line="line1"
       word={word}
@@ -49,7 +50,7 @@ export default class HaikuEditor extends React.Component {
       menus={this.state.line1Menus}
       {...methods}
     />);
-    const line2 = this.props.haiku.line2.text.map((word, i) => <Word 
+    const line2 = haiku.line2.text.map((word, i) => <Word 
       blankWord={false}
       line="line2"
       word={word}
@@ -58,7 +59,7 @@ export default class HaikuEditor extends React.Component {
       menus={this.state.line2Menus}
       {...methods}
     />);
-    const line3 = this.props.haiku.line3.text.map((word, i) => <Word 
+    const line3 = haiku.line3.text.map((word, i) => <Word 
       blankWord={false}
       line="line3"
       word={word}
@@ -80,23 +81,23 @@ export default class HaikuEditor extends React.Component {
       <div id="haiku-editor">
         <div id="editor-line-1">
           {line1.length > 0 ? line1 : blankWord('line1')}
-          <span style={this.props.haiku.line1.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.haiku.line1.syllables}
+          <span className="syllable-msg" style={haiku.line1.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {haiku.line1.syllables}
           </span>
         </div>
         <div id="editor-line-2">
           {line2.length > 0 ? line2 : blankWord('line2')}
-          <span style={this.props.haiku.line2.syllables === 7 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.haiku.line2.syllables}
+          <span className="syllable-msg" style={haiku.line2.syllables === 7 ? {color: 'green'} : { color: 'red' }}>
+            {haiku.line2.syllables}
           </span>
         </div>
         <div id="editor-line-3">
           {line3.length > 0 ? line3 : blankWord('line3')}
-          <span style={this.props.haiku.line3.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.haiku.line3.syllables}
+          <span className="syllable-msg" style={haiku.line3.syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {haiku.line3.syllables}
           </span>
         </div>
-        <button id="start-over" onClick={this.props.startOver}>Start Over</button>
+        <button id="start-over" onClick={startOver}>Start Over</button>
       </div>
     )
   }

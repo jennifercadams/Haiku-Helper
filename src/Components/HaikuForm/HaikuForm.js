@@ -4,19 +4,25 @@ import './HaikuForm.css';
 
 export default class HaikuForm extends React.Component {
   render() {
+    const { handleChange, handleSubmit, 
+      line1, line1Syllables, 
+      line2, line2Syllables, 
+      line3, line3Syllables, 
+      formError, getSyllableCount 
+    } = this.props;
     return (
-      <form id="haiku-form" onSubmit={this.props.handleSubmit}>
+      <form id="haiku-form" onSubmit={handleSubmit}>
         <label htmlFor="line1">Line 1
           <input type="text"
             name="line1"
             id="line1"
             placeholder=" 5 syllables"
             maxLength="100"
-            onChange={this.props.handleChange}
-            value={this.props.line1} 
+            onChange={handleChange}
+            value={line1} 
           />
-          <span style={this.props.line1Syllables === 5 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.line1Syllables || null}
+          <span className="form-syllable-msg" style={line1Syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {line1Syllables || null}
           </span>
         </label>
         <label htmlFor="line2">Line 2
@@ -25,11 +31,11 @@ export default class HaikuForm extends React.Component {
             id="line2"
             placeholder=" 7 syllables"
             maxLength="100"
-            onChange={this.props.handleChange}
-            value={this.props.line2} 
+            onChange={handleChange}
+            value={line2} 
           />
-          <span style={this.props.line2Syllables === 7 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.line2Syllables || null}
+          <span className="form-syllable-msg" style={line2Syllables === 7 ? {color: 'green'} : { color: 'red' }}>
+            {line2Syllables || null}
           </span>
         </label>
         <label htmlFor="line3">Line 3
@@ -38,16 +44,16 @@ export default class HaikuForm extends React.Component {
             id="line3"
             placeholder=" 5 syllables"
             maxLength="100"
-            onChange={this.props.handleChange}
-            value={this.props.line3} 
+            onChange={handleChange}
+            value={line3} 
           />
-          <span style={this.props.line3Syllables === 5 ? {color: 'green'} : { color: 'red' }}>
-            {this.props.line3Syllables || null}
+          <span className="form-syllable-msg" style={line3Syllables === 5 ? {color: 'green'} : { color: 'red' }}>
+            {line3Syllables || null}
           </span>
         </label>
-        <p id="error">{this.props.formError}</p>
+        <p id="error">{formError}</p>
         <div>
-          <button id="count-syllables" onClick={this.props.getSyllableCount}>Count Syllables</button>
+          <button id="count-syllables" onClick={getSyllableCount}>Count Syllables</button>
           <input type="submit" value="Go to Editor" />
         </div>
       </form>

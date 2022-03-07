@@ -16,6 +16,11 @@
   font-family: inherit;
 }
 
+.form-syllable-msg {
+  position: absolute;
+  margin-top: 15px;
+}
+
 #error {
   margin: 0;
   font-size: 16px;
