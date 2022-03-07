@@ -45,7 +45,11 @@ export default class App extends React.Component {
   }
 
   startOver() {
-    this.setState({ editor: false, canvas: false, formError: '', haiku: { line1: {}, line2: {}, line3: {} } });
+    this.setState({ editor: false, canvas: false, 
+      formError: '', formError2: '', 
+      haiku: { line1: {}, line2: {}, line3: {} },
+      canvasSettings: { background: '#ffffff', font: 'Open Sans', textColor: '#000000' }
+    });
   }
 
   backToEditor() {
