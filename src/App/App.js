@@ -16,7 +16,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       welcome: true, editor: false, canvas: false,
-      formError: '',
+      formError: '', formError2: '',
       line1: '', line1Syllables: null,
       line2: '', line2Syllables: null,
       line3: '', line3Syllables: null,
@@ -47,7 +47,7 @@ export default class App extends React.Component {
   }
 
   backToEditor() {
-    this.setState({ editor: true, canvas: false });
+    this.setState({ editor: true, canvas: false, formError: '', formError2: '' });
   }
 
   // Syllable count methods
@@ -154,6 +154,7 @@ export default class App extends React.Component {
   deleteWord(line, i) {
     this.setState(state => ({
       formError: '',
+      formError2: '',
       haiku: {
         ...state.haiku,
         [line]: {
@@ -170,6 +171,7 @@ export default class App extends React.Component {
   addWord(line, i, word) {
     this.setState(state => ({
       formError: '',
+      formError2: '',
       haiku: {
         ...state.haiku,
         [line]: {
@@ -185,13 +187,17 @@ export default class App extends React.Component {
   }
 
   goToCanvas() {
-    const fiveSevenFive = this.state.haiku.line1.syllables === 5
-      && this.state.haiku.line2.syllables === 7
-      && this.state.haiku.line3.syllables === 5;
-    if (fiveSevenFive) {
+    const { haiku, formError } = this.state;
+    const fiveSevenFive = haiku.line1.syllables === 5
+      && haiku.line2.syllables === 7
+      && haiku.line3.syllables === 5;
+    if (fiveSevenFive || formError) {
       this.setState({ editor: false, canvas: true });
     } else {
-      this.setState({ formError: 'Your syllable counts should be 5 - 7 - 5'})
+      this.setState({ 
+        formError: 'Your syllable counts are not 5 - 7 - 5.', 
+        formError2: 'Click "Continue" again to proceed anyway.'
+      })
     }
   }
 
@@ -212,6 +218,7 @@ export default class App extends React.Component {
         {showEditor && <HaikuEditor 
           haiku={this.state.haiku}
           formError={this.state.formError}
+          formError2={this.state.formError2}
           deleteWord={this.deleteWord}
           addWord={this.addWord}
           startOver={this.startOver}
