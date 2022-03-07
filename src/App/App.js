@@ -15,9 +15,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      welcome: true,
-      editor: false,
-      canvas: false,
+      welcome: true, editor: false, canvas: false,
       formError: '',
       line1: '', line1Syllables: null,
       line2: '', line2Syllables: null,
@@ -35,7 +33,6 @@ export default class App extends React.Component {
     this.updateSyllableCount = this.updateSyllableCount.bind(this);
     this.deleteWord = this.deleteWord.bind(this);
     this.addWord = this.addWord.bind(this);
-    this.drawHaikuText = this.drawHaikuText.bind(this);
     this.goToCanvas = this.goToCanvas.bind(this);
   }
 
@@ -64,7 +61,6 @@ export default class App extends React.Component {
     }
     let counter = 0;
     const lineText = this.state.haiku[line].text.slice();
-    console.log(lineText);
     for (let i = 0; i < lineText.length; i++) {
       if (lineText[i].match(/^[0-9]+nd$/)) {
         counter++;
@@ -75,7 +71,6 @@ export default class App extends React.Component {
         lineText.splice(i, 1, ...numberWords)
       }
     }
-    console.log(lineText);
     for (const word of lineText) {
       let cleanWord = word.replace(/[^a-z0-9]/gi, '');
       const syllables = await getWordSyllables(cleanWord);
@@ -187,20 +182,8 @@ export default class App extends React.Component {
     }), () => this.updateSyllableCount(line));
   }
 
-  // Haiku Canvas methods
-
-  drawHaikuText() {
-    const canvas = document.getElementById('haiku-canvas').getContext('2d');
-    canvas.clearRect(0, 0, 400, 300);
-    canvas.font = "24px Open Sans";
-    canvas.textAlign = "center";
-    canvas.fillText(this.state.haiku.line1.text.join(' '), 200, 100);
-    canvas.fillText(this.state.haiku.line2.text.join(' '), 200, 150);
-    canvas.fillText(this.state.haiku.line3.text.join(' '), 200, 200);
-  }
-
   goToCanvas() {
-    this.setState({ editor: false, canvas: true }, () => this.drawHaikuText());
+    this.setState({ editor: false, canvas: true });
   }
 
   render() {
@@ -224,7 +207,11 @@ export default class App extends React.Component {
           startOver={this.startOver}
           goToCanvas={this.goToCanvas}
         />}
-        {showCanvas && <HaikuCanvas />}
+        {showCanvas && <HaikuCanvas 
+          haiku={this.state.haiku}
+          startOver={this.startOver}
+          backToEditor={this.backToEditor}
+        />}
       </main>
     )
   }
