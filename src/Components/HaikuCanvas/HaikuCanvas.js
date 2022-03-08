@@ -15,7 +15,7 @@ export default class HaikuCanvas extends React.Component {
     canvas.clearRect(0, 0, 400, 300);
     canvas.fillStyle = settings.background;
     canvas.fillRect(0, 0, 400, 300);
-    canvas.font = `24px ${settings.font}`;
+    canvas.font = `26px ${settings.font}`;
     canvas.textAlign = 'center';
     canvas.fillStyle = settings.textColor;
     canvas.fillText(haiku.line1.text.join(' '), 200, 100);
