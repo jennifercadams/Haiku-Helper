@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Haiku-Helper/static/css/main.4463933e.css",
-    "main.js": "/Haiku-Helper/static/js/main.3be3afdd.js",
+    "main.js": "/Haiku-Helper/static/js/main.ea09d63d.js",
     "index.html": "/Haiku-Helper/index.html",
     "main.4463933e.css.map": "/Haiku-Helper/static/css/main.4463933e.css.map",
-    "main.3be3afdd.js.map": "/Haiku-Helper/static/js/main.3be3afdd.js.map"
+    "main.ea09d63d.js.map": "/Haiku-Helper/static/js/main.ea09d63d.js.map"
   },
   "entrypoints": [
     "static/css/main.4463933e.css",
-    "static/js/main.3be3afdd.js"
+    "static/js/main.ea09d63d.js"
   ]
 }
